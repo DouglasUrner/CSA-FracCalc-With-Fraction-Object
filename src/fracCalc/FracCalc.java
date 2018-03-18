@@ -16,7 +16,7 @@ public class FracCalc {
 	 * has been calculated
 	 *    e.g. return ==> "1_1/4"
 	 */
-	public String fractionalCalculator(String input)
+	public static String fractionalCalculator(String input)
 	{
 		// TODO: CP 1 - Return String passed as input.
 		// TODO: CP 2 - Return 2nd operand exactly as it was passed.
