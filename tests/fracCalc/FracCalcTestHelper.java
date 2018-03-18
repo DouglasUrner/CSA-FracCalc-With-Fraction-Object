@@ -45,8 +45,8 @@ public class FracCalcTestHelper {
 
   private static int parseValue(String value, int what) {
     int whole = 0;
-    boolean num = false;
-    boolean den = true;
+    //boolean num = false;
+    //boolean den = true;
     int iUnderscore = value.indexOf("_");
     int iNum = iUnderscore + 1;
     int iSlash = value.indexOf("/");
@@ -68,7 +68,7 @@ public class FracCalcTestHelper {
     String numString;
     if (iWholeEnd != 0) {
       numString = value.substring(0, iWholeEnd);
-      if (!isInteger(numString)) {
+      if (isNotInteger(numString)) {
         return 0;
       }
 
@@ -85,12 +85,12 @@ public class FracCalcTestHelper {
       }
     } else {
       numString = value.substring(iNum, iSlash);
-      if (!isInteger(numString)) {
+      if (isNotInteger(numString)) {
         return 0;
       } else {
         int numStringValue = Integer.parseInt(numString);
         String denString = value.substring(iSlash + 1);
-        if (!isInteger(denString)) {
+        if (isNotInteger(denString)) {
           return 0;
         } else {
           int denStringValue = Integer.parseInt(denString);
@@ -113,27 +113,27 @@ public class FracCalcTestHelper {
     }
   }
 
-  private static boolean isInteger(String s) {
+  private static boolean isNotInteger(String s) {
     int i = 0;
 
     if (s.length() == 0) {
-      return false;
+      return true;
     }
 
     if (s.charAt(0) == '-') {
       i = 1;
       if (s.length() == 1) {
-        return false;
+        return true;
       }
     }
 
     while(i < s.length()) {
       char c = s.charAt(i);
       if (c < '0' || c > '9') {
-        return false;
+        return true;
       }
       ++i;
     }
-    return true;
+    return false;
   }
 }
