@@ -1,0 +1,16 @@
+# .gitignore
+#
+# Java (and IntelliJ IDEA - including enough JetBrains specific stuff to enable cleanly
+# starting a cloned version of the project when cloning it).
+#
+# Start by ignoring Everything
+/*
+
+# Except for these:
+!.gitattributes
+!.gitignore
+!.idea
+!*.md
+!License
+!src
+!tests
