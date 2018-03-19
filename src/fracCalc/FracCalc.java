@@ -24,7 +24,7 @@ public class FracCalc {
 		// TODO: CP 4 - Return the calculated result (which may be an improper and unreduced fraction).
 		// TODO: Final - Return a proper fraction reduced to its simplest form.
 
-		return "";
+		return input;
 	}
 
 	// TODO: Use the space below for any helper methods that you need.
