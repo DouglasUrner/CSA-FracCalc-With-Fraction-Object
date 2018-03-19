@@ -27,22 +27,24 @@ public class FracCalc {
 		// TODO: Final - Return a proper fraction reduced to its simplest form.
 
 		// Components of the equation as indexes in  tokens[];
-		int left = 0;
 		int operator = 1;
 		int right = 2;
 
 		// Split the input into tokens on spaces.
 		String[] tokens = input.split(" ");
 
-		return calculate(tokens[left],tokens[operator], tokens[right]).toString();
+		String result = tokens[0];		// Left hand operand.
+		while (right <= (tokens.length - 1)) {
+			result = calculate(result, tokens[operator], tokens[right]);
+			operator += 2;
+			right += 2;
+		}
 
-		//Fraction right = new Fraction(tokens[2]);
-
-		//return "whole:" + right.whole() + " numerator:" + right.numerator() + " denominator:" + right.denominator();
+		return result;
 	}
 
 	// TODO: Use the space below for any helper methods that you need.
-	static Fraction calculate(String left, String operator, String right) {
+	static String  calculate(String left, String operator, String right) {
 		boolean negative = false;
 		int numerator = 0;
 		int denominator = 1;
@@ -80,6 +82,6 @@ public class FracCalc {
 				// TODO: handle unknown operators.
 		}
 
-		return new Fraction(0, numerator, denominator);
+		return new Fraction(0, numerator, denominator).toString();
 	}
 }
