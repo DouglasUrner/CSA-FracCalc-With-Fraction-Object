@@ -7,13 +7,13 @@ public class Fraction {
 	int numerator;
 	int denominator;
 
-	// Core Constructors
+	/*
+	 * Core Constructors
+	 */
 
+	// From a String.
 	public Fraction(String s) {
-		// Empty string
-		if (s.length() == 0) {
-			throw new IllegalArgumentException("ERROR: can't create Fraction from empty string");
-		}
+
 		int begin = 0;
 		int underscore = s.indexOf('_');
 		int slash = s.indexOf('/');
@@ -41,30 +41,29 @@ public class Fraction {
 			this.denominator = Integer.parseInt(s.substring(slash + 1));
 		} else {
 			// Malformed fraction.
-			throw new IllegalArgumentException("ERROR: Malformed Fraction string'" + s + "'.");
+			// TODO: Handle malformed input.
 		}
 	}
 
+	// From individual component values, sign from most significant - used for the result of a calculation.
 	public Fraction(int w, int n, int d) {
-		if (w < 0) {
-			this.negative = true;
-			this.whole = Math.abs(w);
-		}
-		if (n < 0 && w == 0) {
-			this.negative = true;
-			this.numerator = Math.abs(n);
+		// Figure out the sign.
+		if ((w >= 0 && n >= 0 && d >= 0) || (w >= 0 && n < 0 && d < 0)) {
+			this.setNegative(false);
 		} else {
-			// TODO: better error handling.
-			throw new IllegalArgumentException("Numerator");
+			this.setNegative(true);
 		}
-		if (d != 0 && d > 0) {
-			this.denominator = d;
+
+		this.setWhole(Math.abs(w));
+		this.setNumerator(Math.abs(n));
+		if (d != 0) {
+			this.setDenominator(Math.abs(d));
 		} else {
-			// TODO: better error handling.
-			throw new IllegalArgumentException("Denominator");
+			throw new IllegalArgumentException("Demoninator can't be zero.");
 		}
 	}
 
+	// Duplicate from another Fraction - used by toString() to avoid side effects.
 	public Fraction(Fraction f) {
 		this.negative = f.negative;
 		this.whole = f.whole;
@@ -79,7 +78,9 @@ public class Fraction {
 	public int numerator() { return this.numerator; }
 	public int denominator() { return this.denominator; }
 
-	// Mutators (setters)
+	/*
+	 * Mutators (setters) - public interface for changing the form of fractions.
+	 */
 
 	public void improper() {
 		this.numerator = this.whole * this.denominator + this.numerator;
@@ -87,22 +88,63 @@ public class Fraction {
 	}
 
 	public void reduce() {
-		this.whole += this.numerator / this.denominator;
-		this.numerator %= this.denominator;
+		int w = this.whole + this.numerator / this.denominator;
+		int n = this.numerator % this.denominator;
+		int d = n > 0 ? this.denominator : 1;
 
-		int gcf = gcf(this.numerator, this.denominator);
-		this.numerator /= gcf;
-		this.denominator /= gcf;
+		if (n > 0) {
+			int gcf = gcf(this.numerator, this.denominator);
+			n /= gcf;
+			d /= gcf;
+		}
+
+		this.setWhole(w);
+		this.setNumerator(n);
+		this.setDenominator(d);
 	}
 
-	// Utility methods
+	/*
+	 * Internal Setters
+	 *
+	 * Not public because it doesn't make sense to set individual components of a fraction. We use them to
+	 * ensure that error checking and validation happens in one place.
+	 */
 
-	String sign() { return this.negative ? "-" : ""; }
+	void setNegative(boolean negative) {
+		this.negative = negative;
+	}
+
+	void setWhole(int whole) {
+		this.whole = whole;
+	}
+
+	void setNumerator(int numerator) {
+		this.numerator = numerator;
+	}
+
+	void setDenominator(int denominator) {
+		this.denominator = denominator;
+	}
+
+	/*
+	 * Utility Methods
+	 */
+
+	public boolean equals(Fraction that) {
+		if ((this.negative != that.negative) ||
+				(this.whole != that.whole) ||
+				(this.numerator != that.numerator) ||
+				(this.denominator != that.denominator)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 	@Override
 	public String toString() {
-		Fraction f = new Fraction(this); // So we don't change the original.
-		String s;
+		// So we don't change the original.
+		Fraction f = new Fraction(this);
 
 		f.reduce();
 
@@ -121,16 +163,19 @@ public class Fraction {
 		}
 	}
 
-	// Helpers
-
+	/*
+	 * Helpers
+	 */
 	static int gcf(int n, int d) {
 		int gcf = 1;
 
-		for (int i = 2; i < n; i++) {
+		for (int i = 2; i <= n; i++) {
 			if (n % i == 0 && d % i == 0)
 				gcf = i;
 		}
 
 		return gcf;
 	}
+
+	String sign() { return this.negative ? "-" : ""; }
 }
