@@ -91,16 +91,20 @@ public class FractionTest {
 		assertEquals("whole in: " + s, 6, f.whole);
 		assertEquals("numerator in: " + s, 7, f.numerator);
 		assertEquals("denominator in: " + s, 8, f.denominator);
-
-		s = "-9/10";
-		f = new Fraction(0, -9, 10);
-		assertTrue("'" + s + "'should be negative", f.negative);
-		assertEquals("whole in: " + s, 0, f.whole);
-		assertEquals("numerator in: " + s, 9, f.numerator);
-		assertEquals("denominator in: " + s, 10, f.denominator);
 	}
 
-	@Test public void FractionTest_Fraction3() {
+	@Test(expected = IllegalArgumentException.class)
+	public void FractionTest_Fraction3() {
+		String s = "1/0";
+		Fraction f = new Fraction(0, 1, 0);
+		assertFalse("'" + s + "'should not be negative", f.negative);
+		assertEquals("whole in: " + s, 0, f.whole);
+		assertEquals("numerator in: " + s, 1, f.numerator);
+		assertEquals("denominator in: " + s, 0, f.denominator);
+
+	}
+
+	@Test public void FractionTest_Fraction4() {
 		String s = "-6_7/8";
 		Fraction f1 = new Fraction(s);
 		Fraction f2 = new Fraction(f1);

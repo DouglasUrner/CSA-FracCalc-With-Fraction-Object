@@ -59,7 +59,7 @@ public class Fraction {
 		if (d != 0) {
 			this.setDenominator(Math.abs(d));
 		} else {
-			throw new IllegalArgumentException("Demoninator can't be zero.");
+			throw new IllegalArgumentException("Denominator can't be zero.");
 		}
 	}
 
@@ -172,6 +172,4 @@ public class Fraction {
 
 		return gcf;
 	}
-
-	//String sign() { return this.negative ? "-" : ""; }
 }
