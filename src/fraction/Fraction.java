@@ -135,6 +135,8 @@ public class Fraction {
 				(this.numerator == that.numerator) &&	(this.denominator == that.denominator));
 	}
 
+	public int sign() { return this.negative ? -1 : 1; }
+
 	@Override
 	public String toString() {
 		// So we don't change the original.
@@ -147,13 +149,13 @@ public class Fraction {
 			return "0";
 		} else if (f.whole > 0 && f.numerator == 0) {
 			// Whole only.
-			return f.sign() + f.whole;
+			return f.sign() * f.whole + "";
 		} else if (f.whole > 0 && f.numerator > 0) {
 			// Whole and fraction.
-			return f.sign() + f.whole + "_" + f.numerator + "/" + f.denominator;
+			return f.sign() * f.whole + "_" + f.numerator + "/" + f.denominator;
 		} else {
 			// Fraction only.
-			return f.sign() + f.numerator + "/" + f.denominator;
+			return f.sign() * f.numerator + "/" + f.denominator;
 		}
 	}
 
@@ -171,5 +173,5 @@ public class Fraction {
 		return gcf;
 	}
 
-	String sign() { return this.negative ? "-" : ""; }
+	//String sign() { return this.negative ? "-" : ""; }
 }

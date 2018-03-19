@@ -342,13 +342,13 @@ public class FractionTest {
 	public void FractionTest_sign1() {
 		String s = "-1";
 		Fraction f = new Fraction(s);
-		assertEquals("-", f.sign());
+		assertEquals(-1, f.sign());
 	}
 
 	@Test
 	public void FractionTest_sign2() {
 		String s = "2";
 		Fraction f = new Fraction(s);
-		assertEquals("", f.sign());
+		assertEquals(1, f.sign());
 	}
 }
