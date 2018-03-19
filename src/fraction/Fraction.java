@@ -131,14 +131,8 @@ public class Fraction {
 	 */
 
 	public boolean equals(Fraction that) {
-		if ((this.negative != that.negative) ||
-				(this.whole != that.whole) ||
-				(this.numerator != that.numerator) ||
-				(this.denominator != that.denominator)) {
-			return false;
-		} else {
-			return true;
-		}
+		return ((this.negative == that.negative) && (this.whole == that.whole) &&
+				(this.numerator == that.numerator) &&	(this.denominator == that.denominator));
 	}
 
 	@Override
