@@ -159,6 +159,15 @@ public class Fraction {
 		}
 	}
 
+	public String toStringCanonical() {
+		// So we don't change the original.
+		Fraction f = new Fraction(this);
+
+		f.reduce();
+
+		return (isNegative() ? "-" : "") + whole() + "_" + numerator() + "/" + denominator();
+	}
+
 	/*
 	 * Helpers
 	 */
